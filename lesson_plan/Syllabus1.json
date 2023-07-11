@@ -1,0 +1,322 @@
+{
+    "boards": [
+      {
+        "name": "CBSE",
+        "classes": [
+          {
+            "name": "Class 7",
+            "subjects": [
+              {
+                "name": "Science",
+                "lessons": [
+                  {
+                    "name": "Matter and its Nature",
+                    "topics": ["Matter", "Classification of Matter", "Physical and Chemical Changes", "Separation of Mixtures"]
+                  },
+                  {
+                    "name": "Atoms and Molecules",
+                    "topics": ["Atoms", "Subatomic Particles", "Atomic Number", "Mass Number", "Isotopes", "Valency"]
+                  },
+                  {
+                    "name": "Bonding in Chemistry",
+                    "topics": ["Ionic Bonding", "Covalent Bonding", "Coordinate Bonding", "Valence Bond Theory"]
+                  },
+                  {
+                    "name": "The Periodic Table",
+                    "topics": ["Periodic Table", "Properties of Elements in Periodic Table", "S-Block Elements", "P-Block Elements", "d-Block Elements", "f-Block Elements"]
+                  },
+                  {
+                    "name": "Combustion and Flame",
+                    "topics": ["Combustion", "Flame", "Types of Combustion", "Combustion Reaction", "Prevention of Fire"]
+                  },
+                  {
+                    "name": "Forces in Nature",
+                    "topics": ["Force", "Types of Forces", "Mechanical Advantage", "Work", "Energy", "Power"]
+                  },
+                  {
+                    "name": "Sound",
+                    "topics": ["Sound", "Production of Sound", "Propagation of Sound", "Reflection of Sound", "Refraction of Sound", "Doppler Effect"]
+                  },
+                  {
+                    "name": "Light",
+                    "topics": ["Light", "Electromagnetic Spectrum", "Reflection of Light", "Refraction of Light", "Dispersion of Light", "Spherical Mirrors", "Lenses"]
+                  },
+                  {
+                    "name": "Magnetism and Electricity",
+                    "topics": ["Magnetism", "Magnetic Field", "Magnetic Lines of Force", "Magnetic Poles", "Magnetic Induction", "Electromagnetism", "Electricity", "Conductors", "Insulators", "Semi-conductors", "Electric Current", "Potential Difference", "Resistance", "Ohm's Law"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Class 8",
+            "subjects": [
+              {
+                "name": "Science",
+                "lessons": [
+                  {
+                    "name": "Our Environment",
+                    "topics": ["Our Environment", "Natural Resources", "Pollution", "Conservation of Natural Resources", "Disaster Management"]
+                  },
+                  {
+                    "name": "The Living World",
+                    "topics": ["The Living World", "Classification of Living Organisms", "Diversity in the Living World", "Organ Systems", "Life Processes"]
+                  },
+                  {
+                    "name": "Health and Diseases",
+                    "topics": ["Health", "Diseases", "Prevention of Diseases", "Nutrition", "Digestion", "Absorption", "Transport of Nutrients", "Respiration", "Excretion"]
+                  },
+                  {
+                    "name": "The Universe",
+                    "topics": ["The Universe", "Stars", "Galaxies", "The Solar System", "The Earth"]
+                  },
+                  {
+                    "name": "Biology",
+                    "topics": ["Biology", "Cell Structure", "Cell Division", "Plants", "Animals", "Microorganisms"]
+                  },
+                  {
+                    "name": "Physics",
+                    "topics": ["Physics", "Forces and Motion", "Work, Energy and Power", "Heat and Thermodynamics", "Light and Optics", "Sound"]
+                  }
+                ]
+              }
+          
+           ]
+        },
+        {
+            "name": "Class 9",
+            "subjects": [
+              {
+                "name": "Science",
+                "lessons": [
+                  {
+                    "name": "Forces and Motion",
+                    "topics": ["Forces and Motion", "Laws of Motion", "Work, Energy and Power", "Heat and Thermodynamics", "Light and Optics", "Sound"]
+                  },
+                  {
+                    "name": "Matter in Our Surroundings",
+                    "topics": ["Matter in Our Surroundings", "States of Matter", "The Solid State", "The Liquid State", "The Gaseous State", "Intermolecular Forces"]
+                  },
+                  {
+                    "name": "Plants - Structure and Function",
+                    "topics": ["Plants - Structure and Function", "Plant Tissues", "Plant Organs", "Plant Growth and Development", "Reproduction in Plants", "Diseases and Their Control"]
+                  },
+                  {
+                    "name": "Animals - Structure and Function",
+                    "topics": ["Animals - Structure and Function", "Animal Tissues", "Animal Organs", "Animal Locomotion", "Respiration in Animals", "Digestion in Animals", "Circulation in Animals", "Excretion in Animals", "Reproduction in Animals"]
+                  },
+                  {
+                    "name": "The Universe",
+                    "topics": ["The Universe", "Stars", "Galaxies", "The Solar System", "The Earth"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Class 10",
+            "subjects": [
+              {
+                "name": "Science",
+                "lessons": [
+                  {
+                    "name": "Chemical Bonding and Molecular Structure",
+                    "topics": ["Chemical Bonding", "Ionic Bonding", "Covalent Bonding", "Coordinate Bonding", "Valence Bond Theory", "Molecular Orbital Theory"]
+                  },
+                  {
+                    "name": "States of Matter",
+                    "topics": ["States of Matter", "Gaseous State", "Liquid State", "Solid State", "Intermolecular Forces"]
+                  },
+                  {
+                    "name": "Thermal Physics",
+                    "topics": ["Thermal Physics", "Heat", "Temperature", "Calorimetry", "Change of State", "Gas Laws"]
+                  },
+                  {
+                    "name": "Electrostatics",
+                    "topics": ["Electrostatics", "Charge", "Coulomb's Law", "Electric Field", "Potential Difference", "Capacitance", "Electric Current"]
+                  },
+                  {
+                    "name": "Magnetism and Electromagnetism",
+                    "topics": ["Magnetism and Electromagnetism", "Magnetic Field", "Magnetic Lines of Force", "Magnetic Poles", "Magnetic Induction", "Electromagnetism", "Electricity", "Conductors", "Insulators", "Semi-conductors"]
+                  },
+                  {
+                    "name": "Light",
+                    "topics": ["Light", "Electromagnetic Spectrum", "Reflection of Light", "Refraction of Light", "Dispersion of Light", "Spherical Mirrors", "Lenses"]
+                  },
+                  {
+                    "name": "Sound",
+                    "topics": ["Sound", "Production of Sound", "Propagation of Sound", "Reflection of Sound", "Refraction of Sound", "Doppler Effect"]
+                  },
+                  {
+                    "name": "Combustion and Flame",
+                    "topics": ["Combustion and Flame", "Laws of Fire", "Types of Combustion", "Production of Light and Heat", "Control of Fire"]
+                  },
+                  {
+                    "name": "Our Environment",
+                    "topics": ["Our Environment", "Natural Resources", "Pollution", "Conservation of Natural Resources", "Disaster Management"]
+                  },
+                  {
+                    "name": "The Universe",
+                    "topics": ["The Universe", "Stars", "Galaxies", "The Solar System", "The Earth"]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+ 
+    },
+    {
+      "name": "Maharashtra State Board",
+      "classes": [
+        {
+          "name": "Class 7",
+          "subjects": [
+            {
+              "name": "Science",
+              "lessons": [
+                {
+                  "name": "Matter and its Nature",
+                  "topics": ["Matter", "Classification of Matter", "Physical and Chemical Changes", "Separation of Mixtures"]
+                },
+                {
+                  "name": "Atoms and Molecules",
+                  "topics": ["Atoms", "Subatomic Particles", "Atomic Number", "Mass Number", "Isotopes", "Valency"]
+                },
+                {
+                  "name": "Bonding in Chemistry",
+                  "topics": ["Ionic Bonding", "Covalent Bonding", "Coordinate Bonding", "Valence Bond Theory"]
+                },
+                {
+                  "name": "The Periodic Table",
+                  "topics": ["Periodic Table", "Properties of Elements in Periodic Table", "S-Block Elements", "P-Block Elements", "d-Block Elements", "f-Block Elements"]
+                },
+                {
+                  "name": "Combustion and Flame",
+                  "topics": ["Combustion", "Flame", "Types of Combustion", "Combustion Reaction", "Prevention of Fire"]
+                },
+                {
+                  "name": "Forces in Nature",
+                  "topics": ["Force", "Types of Forces", "Mechanical Advantage", "Work", "Energy", "Power"]
+                },
+                {
+                  "name": "Sound",
+                  "topics": ["Sound", "Production of Sound", "Propagation of Sound", "Reflection of Sound", "Refraction of Sound", "Doppler Effect"]
+                },
+                {
+                  "name": "Light",
+                  "topics": ["Light", "Electromagnetic Spectrum", "Reflection of Light", "Refraction of Light", "Dispersion of Light", "Spherical Mirrors", "Lenses"]
+                },
+                {
+                  "name": "Magnetism and Electricity",
+                  "topics": ["Magnetism", "Magnetic Field", "Magnetic Lines of Force", "Magnetic Poles", "Magnetic Induction", "Electromagnetism", "Electricity", "Conductors", "Insulators", "Semi-conductors", "Electric Current", "Potential Difference", "Resistance", "Ohm's Law"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Class 8",
+          "subjects": [
+            {
+              "name": "Science",
+              "lessons": [
+                {
+                  "name": "Our Environment",
+                  "topics": ["Our Environment", "Natural Resources", "Pollution", "Conservation of Natural Resources", "Disaster Management"]
+                },
+                {
+                  "name": "The Living World",
+                  "topics": ["The Living World", "Classification of Living Organisms", "Diversity in the Living World", "Organ Systems", "Life Processes"]
+                },
+                {
+                  "name": "Health and Diseases",
+                  "topics": ["Health", "Diseases", "Prevention of Diseases", "Nutrition", "Digestion", "Absorption", "Transport of Nutrients", "Respiration", "Excretion"]
+                },
+                {
+                  "name": "The Universe",
+                  "topics": ["The Universe", "Stars", "Galaxies", "The Solar System", "The Earth"]
+                },
+                {
+                  "name": "Biology",
+                  "topics": ["Biology", "Cell Structure", "Cell Division", "Plants", "Animals", "Microorganisms"]
+                },
+                {
+                  "name": "Physics",
+                  "topics": ["Physics", "Forces and Motion", "Work, Energy and Power", "Heat and Thermodynamics", "Light and Optics", "Sound"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Class 9",
+          "subjects": [
+            {
+              "name": "Science",
+              "lessons": [
+                {
+                  "name": "Forces and Motion",
+                  "topics": ["Forces and Motion", "Laws of Motion", "Work, Energy and Power", "Heat and Thermodynamics", "Light and Optics", "Sound"]
+                },
+                {
+                  "name": "Matter in Our Surroundings",
+                  "topics": ["Matter in Our Surroundings", "States of Matter", "The Solid State", "The Liquid State", "The Gaseous State", "Intermolecular Forces"]
+                },
+                {
+                  "name": "Plants - Structure and Function",
+                  "topics": ["Plants - Structure and Function", "Plant Tissues", "Plant Organs", "Plant Growth and Development", "Reproduction in Plants", "Diseases and Their Control"]
+                },
+                {
+                  "name": "Animals - Structure and Function",
+                  "topics": ["Animals - Structure and Function", "Animal Tissues", "Animal Organs", "Animal Locomotion", "Respiration in Animals", "Digestion in Animals", "Circulation in Animals", "Excretion in Animals", "Reproduction in Animals"]
+                },
+                {
+                  "name": "The Universe",
+                  "topics": ["The Universe", "Stars", "Galaxies", "The Solar System", "The Earth"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Class 10",
+          "subjects": [
+            {
+              "name": "Science",
+              "lessons": [
+                {
+                  "name": "Chemical Bonding and Molecular Structure",
+                  "topics": ["Chemical Bonding", "Ionic Bonding", "Covalent Bonding", "Coordinate Bonding", "Valence Bond Theory", "Molecular Orbital Theory"]
+                },
+                {
+                  "name": "States of Matter",
+                  "topics": ["States of Matter", "Gaseous State", "Liquid State", "Solid State", "Intermolecular Forces"]
+                },
+                {
+                  "name": "Thermal Physics",
+                  "topics": ["Thermal Physics", "Heat", "Temperature", "Calorimetry", "Change of State", "Gas Laws"]
+                },
+                {
+                  "name": "Electrostatics",
+                  "topics": ["Electrostatics", "Charge", "Coulomb's Law", "Electric Field", "Potential Difference", "Capacitance", "Electric Current"]
+                },
+                {
+                  "name": "Magnetism and Electromagnetism",
+                  "topics": ["Magnetism and Electromagnetism", "Magnetic Field", "Magnetic Lines of Force", "Magnetic Poles", "Magnetic Induction", "Electromagnetism", "Electricity", "Conductors", "Insulators", "Semi-conductors"]
+                },
+                {
+                  "name": "Light",
+                  "topics": ["Light", "Electromagnetic Spectrum", "Reflection of Light", "Refraction of Light", "Dispersion of Light", "Spherical Mirrors", "Lenses"]
+                }
+              ]
+            }
+          
+        ]
+      }
+
+  ]
+}
+    ]
+}
