@@ -91,8 +91,8 @@ def app():
                         question_placeholder.write(f" Wrong! , right answer is {answers[i]}")
             st.success("Test Score - " + str(session_state.score))
         if session_state.quiz_data :
-            new_quiz_placeholder = st.empty()
-            new_quiz = new_quiz_placeholder.button("new quiz", key="new_quiz_button")
+            new_quiz = st.button("new quiz")
             if new_quiz:
                 session_state.quiz_data = None
                 session_state.score = 0
+                st.experimental_rerun()
