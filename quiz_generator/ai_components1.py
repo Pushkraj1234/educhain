@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from langchain.chat_models import ChatOpenAI
-from langchain.chains import LLMChain ,create_extraction_chain
+from langchain.chains import LLMChain ,create_extraction_chain,ConversationChain
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 import ast
@@ -11,12 +11,12 @@ llm = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0.0)
 memory = ConversationBufferMemory()
 
 
-# def respond_to_query(query):
-#     llm_agent = ConversationChain(
-#         llm=llm,
-#         memory=memory,
-#     )
-#     return llm_agent.run(query)
+def respond_to_query(query):
+    llm_agent = ConversationChain(
+        llm=llm,
+        memory=memory,
+    )
+    return llm_agent.run(query)
 def sort_objects(obj_list):
 
     question = []

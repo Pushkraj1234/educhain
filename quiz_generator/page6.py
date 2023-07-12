@@ -44,7 +44,7 @@ def app():
         
         topic = topic_placeholder.selectbox("Select topic",lesson_list["topics"])
 
-        n = n_placeholder.number_input("Number of posts", min_value = 1 ,max_value = 15, value = 1, step = 1)
+        n = n_placeholder.number_input("Number of questions", min_value = 1 ,max_value = 15, value = 1, step = 1)
         if button.button("Generate"):
             if n and board and classe and subject and lesson and topic :
                 try:
@@ -89,10 +89,9 @@ def app():
                         question_placeholder.write("Correct  Answer!")
                     if ans[i] != user_input:
                         question_placeholder.write(f" Wrong! , right answer is {answers[i]}")
-            st.success("Test Score - " + str(session_state.score))
-        if session_state.quiz_data :
-            new_quiz_placeholder = st.empty()
-            new_quiz = new_quiz_placeholder.button("new quiz", key="new_quiz_button")
-            if new_quiz:
-                session_state.quiz_data = None
-                session_state.score = 0
+                st.success("Test Score - " + str(session_state.score))
+                if session_state.quiz_data :
+                    new_quiz = st.button("new quiz")
+                    if new_quiz:
+                        session_state.quiz_data = None
+                        session_state.score = 0

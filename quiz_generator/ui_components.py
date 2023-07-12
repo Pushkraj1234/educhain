@@ -2,7 +2,7 @@ import json
 import streamlit as st
 from PIL import Image
 import streamlit.components.v1 as components
-
+from ai_components1 import respond_to_query
 
 
 def read_image(image_path):
