@@ -41,10 +41,10 @@ def sort_objects(obj_list):
 
     return [question,options,correct]
 
-def create_ques_ans(m,board,classe, subject , lesson , topic):
-    template =f"""Prepare {m} multiple choice questions on {{board}} board {classe} ,{subject} subject , {lesson} on {topic}.
+def create_ques_ans(number_of_qn,board,classe, subject , lesson , topic):
+    template =f"""Prepare {number_of_qn} multiple choice questions on {{board}} board {classe} ,{subject} subject , {lesson} on {topic}.
     try to make the questions on true definitons and on numerical or application also  somewhat complicated
-    generate a python list which contains {m} sublists . In each python sublist ,
+    generate a python list which contains {number_of_qn} sublists . In each python sublist ,
     first element should be the question. Second , third and fourth elements should be the only 3 options , 
     and fifth element should be the complete correct option to the question exactly as in options .avoid unnecesary text connotations
     , extra whitespaces and also avoid newlines anywhere , terminate the lists and strings correctly"""
@@ -69,4 +69,3 @@ def create_ques_ans(m,board,classe, subject , lesson , topic):
     response = chain.run(a)
      
     return sort_objects(response) 
-print(create_ques_ans(3, "CBSE", "10", "science" , "metals and non metals" , "metals"))
