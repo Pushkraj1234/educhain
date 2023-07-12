@@ -44,7 +44,7 @@ def app():
         
         topic = topic_placeholder.selectbox("Select topic",lesson_list["topics"])
 
-        n = n_placeholder.number_input("Number of posts", min_value = 1 ,max_value = 15, value = 1, step = 1)
+        n = n_placeholder.number_input("Number of questions", min_value = 1 ,max_value = 15, value = 1, step = 1)
         if button.button("Generate"):
             if n and board and classe and subject and lesson and topic :
                 try:
