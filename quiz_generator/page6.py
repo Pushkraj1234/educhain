@@ -86,10 +86,10 @@ def app():
                     question_placeholder = question_placeholders[i]
                     if ans[i] == user_input:
                         session_state.score+=1
-                        question_placeholder.write("Correct  Answer!")
+                        question_placeholder.success("Correct  Answer!")
                     if ans[i] != user_input:
-                        question_placeholder.write(f" Wrong! , right answer is {answers[i]}")
-            st.success("Test Score - " + str(session_state.score))
+                        question_placeholder.error(f" Wrong! , right answer is {answers[i]}")
+                st.success("Test Score - " + str(session_state.score))
         if session_state.quiz_data :
             new_quiz = st.button("new quiz")
             if new_quiz:
