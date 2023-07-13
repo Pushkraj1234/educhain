@@ -1,5 +1,4 @@
 import streamlit as st
-from ui_components import doubt_container
 from page6 import app
 import os
 

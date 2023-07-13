@@ -1,0 +1,230 @@
+{
+  "chapters": [
+    {
+      "chapterId": 0,
+      "chapterTitle": "User Guide",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "How to use the application?",
+          "content": "The application provides the necessary materials and resources for building your first LLM application using Langchain, streamlit and OpenAI. Follow the resource to build up your own application."
+        },
+        {
+          "sectionId": 2,
+          "sectionTitle": "Asking your queries!",
+          "content": "If you have any specific query related to the resources shared here. You can ask your query to the AI Assistant provided here. Just ask your query to the chatbot and it will revert back to your query."
+        },
+        {
+          "sectionId": 3,
+          "sectionTitle": "Test your knowledge",
+          "content": "The application has a webpage that provides you to let you test your knowledge by creating quick set of questions for you. Also, if you like to work on your own project, it will give you tasks to work on."
+        }
+      ]
+    },
+    {
+      "chapterId": 1,
+      "chapterTitle": "What are Large Language Models?",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "Introduction to Large Language Models",
+          "content": "Large language models (LLMs) are advanced artificial intelligence algorithms trained on massive amounts of data. They're based on transformer architectures and can understand and generate human language."
+        },
+        {
+          "sectionId": 2,
+          "sectionTitle": "Working of Large Language Models",
+          "content": "LLMs are usually provided as a service over an API or web interface. LLMs can understand multiple languages and various topics, enabling them to produce text in different styles.",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "Architecture",
+              "content": "LLMs are based on the transformer model architecture, which includes multiple layers of self-attention mechanisms.",
+              "image": "assests/llm_architecture.png"
+            },
+            {
+              "subsectionId": 2,
+              "subsectionTitle": "Training",
+              "content": "The GPT-3 model, for example, was trained on vast amounts of text data from the internet, which helps it generate coherent and contextually-relevant responses."
+            }
+          ]
+        },
+        {
+          "sectionId": 3,
+          "sectionTitle": "Applications of Large Language Models",
+          "content": "Large language models can be used for tasks such as text generation, summarization, translation, and sentiment analysis. They have revolutionized the field of conversational AI and have real-world applications in industries and businesses, such as support chatbots for customer engagement.",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "Overview of Applications of Large Language Models",
+              "image": "assests/llm_applications.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterId": 2,
+      "chapterTitle": "Intro to Langchain",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "What is Langchain?",
+          "content": "Langchain is a powerful tool for working with large language models (LLMs) that simplifies the process of composing these pieces and provides an abstraction for building custom knowledge chatbots. It works by taking a large source of data, breaking it down into chunks, and embedding them into a Vector Store. When a prompt is inserted into the chatbot, Langchain queries the Vector Store for relevant information, which is then used in conjunction with the LLM to generate the answer."
+        },
+        {
+          "sectionId": 2,
+          "sectionTitle": "Why Do We Need Langchain?",
+          "content": "Langchain offers a useful approach to overcome the limitations of LLMs by preprocessing the corpus of text, breaking it down into chunks or summaries, embedding them in a vector space, and searching for similar chunks when a question is asked. This pattern of preprocessing, real-time collecting, and interaction with the LLM is common and can be used in other scenarios, such as code and semantic search. Langchain provides an abstraction that simplifies the process of composing these pieces, making it easier to work with large language models."
+        },
+        {
+          "sectionId": 3,
+          "sectionTitle": "Work flow of Langchain",
+          "content": "The core idea of the library is that we can chain together different components to create more advanced use cases around LLMs. Chains may consist of multiple components from several modules. \n - **Prompt templates**: Prompt templates are templates for different types of prompts. Like chatbot style templates, ELI5 question-answering, etc. \n - **LLMs**: Large language models like GPT-3, BLOOM, etc. \n - **Agents**: Agents use LLMs to decide what actions should be taken. Tools like web search or calculators can be used, and all are packaged into a logical loop of operations. \n - **Memory**: Short-term memory, long-term memory. \n\n ![Flow Diagram of Langchain](assests/langchain_flow.png)"
+        },
+        {
+          "sectionId": 4,
+          "sectionTitle": "Example: Building a Question-Answering App with Langchain",
+          "content": "Let's build a simple question-answering app using Langchain.",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "Step 1: Install Langchain",
+              "code": "pip install langchain"
+            },
+            {
+              "subsectionId": 2,
+              "subsectionTitle": "Step 2: Import required libraries",
+              "code": "import langchain as lc\nfrom langchain import SimpleSequentialChain"
+            },
+            {
+              "subsectionId": 3,
+              "subsectionTitle": "Step 3: Load a large language model",
+              "code": "model = lc.load('gpt-3')"
+            },
+            {
+              "subsectionId": 4,
+              "subsectionTitle": "Step 4: Define a function to answer questions",
+              "code": "def get_answer(prompt):\n  chain = SimpleSequentialChain(model)\n  chain.add_prompt(prompt)\n  response = chain.generate()\n  return response"
+            },
+            {
+              "subsectionId": 5,
+              "subsectionTitle": "Step 5: Get answers to your questions",
+              "code": "question = 'What is the capital of France?'\nanswer = get_answer(question)\nprint(answer)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterId": 3,
+      "chapterTitle": "Overview of Techstack",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "Langchain",
+          "content": "Langchain is a framework for building applications on top of Large Language Models"
+        },
+        {
+          "sectionId": 2,
+          "sectionTitle": "Streamlit",
+          "content": "Streamlit is an open-source Python library used for building interactive web applications. It simplifies the process of creating and sharing data-focused apps, machine learning prototypes, and data visualizations.",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "Streamlit UI\n\n Streamlit helps to develop a nice UI for your application.",
+              "image": "assests/streamlit_demo.gif"
+            },
+            {
+              "subsectionId": 2,
+              "subsectionTitle": "How to install Streamlit",
+              "code": "pip install streamlit"
+            },
+            {
+              "subsectionId": 3,
+              "subsectionTitle": "How to run your streamlit application",
+              "code": "#streamlit run YOUR_APPLICATION_NAME.py\n\n#For example\n\nstreamlit run app.py"
+            }
+          ]
+        },
+        {
+          "sectionId": 2,
+          "sectionTitle": "OpenAI LLMs",
+          "content": "The OpenAI API provides developers with access to the powerful language models developed by OpenAI. With the OpenAI API, you can integrate natural language processing capabilities into your applications, enabling them to generate text, answer questions, perform language translation, simulate conversations, and much more",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "How to use OpenAI LLMs: API \nWhat is an API?",
+              "content": "An API, which stands for Application Programming Interface, is a way for different software applications to communicate and work together. It's like a language that allows different programs to understand each other and exchange information. Think of it as a menu in a restaurant. The menu lists the dishes available, along with a description of each dish. Similarly, an API provides a list of functions and data that one software can offer to other software. It makes it easier for different programs to work together and share information, just like how a menu helps you order food from a restaurant."
+            },
+            {
+              "subsectionId": 2,
+              "subsectionTitle": "How to get your own API key?\n- Visit the OpenAI website.\n- Sign up for an OpenAI account if you don't have one already.\n- Log in to your OpenAI account.\n- Go to the OpenAI API section or dashboard.\n- Follow the instructions to generate an API key.\n- Make sure to carefully read and agree to any terms or conditions.\n- Once your API key is generated, copy and securely store it.\n- You can now use your API key to authenticate and access the OpenAI API in your applications.",
+              "image": "assests/open_api_key.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterId": 4,
+      "chapterTitle": "Social Media Content Generator",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "Introduction",
+          "content": " Simplify content creation with our Language Model-powered app. Generate social media posts effortlessly and customize them to your preferences. Enhance your online presence, engage your audience, and save time. ",
+          "subsections": [
+            {
+              "subsectionId": 1,
+              "subsectionTitle": "Installing libraries",
+              "code": "!pip install -qU langchain openai"
+            },
+            {
+              "subsectionId": 2,
+              "subsectionTitle": "Setting up the OpenAI Acess Key \n Enter your openAI API key to access GPT-3.5, text-davinci-003 and other LLMs.",
+              "code": "import os \nfrom getpass import getpass\n\nos.environ['OPENAI_API_KEY'] = getpass()"
+            },
+            {
+              "subsectionId": 3,
+              "subsectionTitle": "Using LLM to run a query using API\n The OpenAI API is a tool that allows the users to access the powerful language capabilities of OpenAI's smart computer systems. These computers are trained to understand and generate human-like text. Using the API, developers can send their questions, prompts, or messages to OpenAI's servers. The smart computers process this input and provide helpful and intelligent responses.\n\nLangChain enables access to a range of pre-trained LLMs (e.g., GPT-3) trained on large datasets. The large language model component generates output (in this case, text) based on the prompt and input. These LLMs can further be fine-tuned to match the needs of specific conversational agents (e.g., if you are building a legal-specific chatbot).",
+              "code": "# using a LLM to run a query\n\nfrom langchain.llms import OpenAI\n\ngpt3_model = OpenAI(model_name = 'text-davinci-003')\n\nprint(gpt3_model(\"Please write an innovative tweet on Elon Musk\"))"
+            },
+            {
+              "subsectionId": 4,
+              "subsectionTitle": "What is prompt?\n\nA prompt is typically structured with several components to guide the model's output generation. These components include instructions, external information or context, user input or query, and an output indicator. While not all prompts require all of these components, it's often beneficial to include two or more. Let's define each component more precisely. For this example we are focusing on only two components.\n\nInstructions: These inform the model how to utilize inputs and external information to produce the desired output.\n\nUser input or query: This component typically represents a query directly input by the user of the system.",
+              "code": "from langchain import PromptTemplate\n\ntweet_template = \"\"\"\nGive me {number} tweets on {topic}.\n\"\"\"\n\ntweet_prompt = PromptTemplate(template = tweet_template, input_variables = ['number', 'topic'])\n\ntweet_template.format(number =7, topic = \"AI\")"
+            },
+            {
+              "subsectionId": 5,
+              "subsectionTitle": "Connecting LLM and PromptTemplate using LLM Chain\n\nChains allow us to combine multiple components together to create a single, coherent application. For example, we can create a chain that takes user input, formats it with a PromptTemplate, and then passes the formatted response to an LLM.",
+              "code": "from langchain import LLMChain\n\ntweet_chain = LLMChain(\n                        prompt = tweet_prompt,\n                        llm = gpt3_model\n)\n\nprint(tweet_chain.run(number = 10, topic = \"Road Safety\"))",
+              "image": "assests/langchain_flow.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterId": 5,
+      "chapterTitle": "Test your knowledge",
+      "content": "Following are a list of multiple choice question. Lets see if you can get all of them correct or not.",
+      "sections": [
+        {
+          "subsectionId": "Question",
+          "subsectionTitle": "Question 1"
+        }
+      ]
+    },
+    {
+      "chapterId": 6,
+      "chapterTitle": "Build your own AI app",
+      "content": "Confused what to build? You can just ask here any project ideas and start working on it!",
+      "sections": [
+        {
+          "sectionId": 1,
+          "sectionTitle": "Work on a really cool project!"
+        }
+      ]
+    }
+  ]
+}
