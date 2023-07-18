@@ -5,10 +5,13 @@ from langchain.chains import LLMChain ,create_extraction_chain,ConversationChain
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 
+
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 llm = ChatOpenAI(model_name='gpt-4', temperature=0.0)
+
 memory = ConversationBufferMemory()
+
 
 
 def respond_to_query(query):
@@ -17,8 +20,8 @@ def respond_to_query(query):
         memory=memory,
     )
     return llm_agent.run(query)
-def sort_objects(obj_list):
 
+def sort_objects(obj_list):
     question = []
     options = []
     correct = []
@@ -26,20 +29,22 @@ def sort_objects(obj_list):
     for obj in obj_list:
 
         if 'question' in obj :
+
             question.append(obj['question'])
         for i in range(3):
-            list=[]
-            if 'option1' in obj :
+            option_list = []
+            if 'option1' in obj:
                 list.append(obj['option1'])
-            if 'option2' in obj :
+            if 'option2' in obj:
                 list.append(obj['option2'])
-            if 'option3' in obj :
+            if 'option3' in obj:
                 list.append(obj['option3'])
-        options.append(list)
-        if 'correct answer' in obj :
+        options.append(option_list)
+        if 'correct answer' in obj:
             correct.append(obj['correct answer'])
 
-    return [question,options,correct]
+    return [question, options, correct]
+
 
 def create_ques_ans(number_of_qn,board,classe, subject , lesson , topic,standard):
     if standard is "Basic":
@@ -61,20 +66,21 @@ def create_ques_ans(number_of_qn,board,classe, subject , lesson , topic,standard
 
 
     llm = ChatOpenAI(model = "gpt-4")
+
     schema = {
-    "properties" : {
-        "question" : {"type" : "string"},
-        "option1" : {"type" : "string"},
-        "option2" : {"type" : "string"},
-        "option3" : {"type" : "string"},
-        "correct answer" : {"type" : "string"}
-    },
-    "required" : ["question", "options","correct_answer"]
+        "properties": {
+            "question": {"type": "string"},
+            "option1": {"type": "string"},
+            "option2": {"type": "string"},
+            "option3": {"type": "string"},
+            "correct answer": {"type": "string"}
+        },
+        "required": ["question", "options", "correct_answer"]
     }
     chain = create_extraction_chain(schema, llm)
     response = chain.run(a)
-     
     return sort_objects(response) 
+
 def report(list):
     
     template =f"""U are provided with a list of questions {{question}} and list of coreesponding answers{list[1]} marked .
@@ -84,3 +90,4 @@ def report(list):
     quizzer = LLMChain(prompt = prompt, llm = gpt4_model)
     a=quizzer.run(question=list[0])
     return a
+
