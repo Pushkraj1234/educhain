@@ -1,5 +1,5 @@
 import streamlit as st
-from ai_components1 import create_ques_ans
+from ai_components1 import create_ques_ans,report
 import json
 def app():
     tab1= st.tabs(["Give a quick quiz!"])
@@ -23,8 +23,9 @@ def app():
     lesson_placeholder = st.empty()
     topic_placeholder = st.empty()
     n_placeholder=st.empty()
+    standard_placeholder=st.empty()
     button=st.empty()
-
+    
     if session_state.quiz_data is None:
         board_names = [board["name"] for board in data["boards"]]
         board = board_placeholder.selectbox("Select board",board_names)
@@ -43,20 +44,20 @@ def app():
         lesson_list= next((b for b in subject_list["lessons"] if b["name"]==lesson) , None)
         
         topic = topic_placeholder.selectbox("Select topic",lesson_list["topics"])
-
-        n = n_placeholder.number_input("Number of questions", min_value = 1 ,max_value = 15, value = 1, step = 1)
+        standard =standard_placeholder.selectbox("select the standard",["Basic","Intermediate","Advanced"])
+        n = n_placeholder.number_input("Number of questions", min_value = 1 ,max_value = 25, value = 1, step = 1)
         if button.button("Generate"):
-            if n and board and classe and subject and lesson and topic :
-                try:
-                    session_state.quiz_data = create_ques_ans(n, board ,classe , subject , lesson , topic)
+            try:
+                    session_state.quiz_data = create_ques_ans(n, board ,classe , subject , lesson , topic,standard)
                     n_placeholder.empty()
                     board_placeholder.empty()
                     class_placeholder.empty()
                     subject_placeholder.empty()
                     lesson_placeholder.empty()
                     topic_placeholder.empty()
-                except Exception as e :
-                    st.error("Please select valid topic and number")
+                    standard_placeholder.empty()
+            except Exception as e :
+                    st.error("Please select valid number")
     if session_state.quiz_data:
         questions = session_state.quiz_data[0]
         options = session_state.quiz_data[1]
@@ -90,6 +91,8 @@ def app():
                     if ans[i] != user_input:
                         question_placeholder.error(f" Wrong! , right answer is {answers[i]}")
                 st.success("Test Score - " + str(session_state.score))
+                
+                st.success(f"{report([questions,ans])}")
         if session_state.quiz_data :
             new_quiz = st.button("new quiz")
             if new_quiz:
