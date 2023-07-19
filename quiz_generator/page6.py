@@ -1,7 +1,9 @@
+
+import streamlit as st
+from ai_components1 import create_ques_ans,report
 import os
 import json
-import streamlit as st
-from quiz_generator.ai_components1 import create_ques_ans
+
 
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
@@ -26,8 +28,10 @@ def app():
     subject_placeholder = st.empty()
     lesson_placeholder = st.empty()
     topic_placeholder = st.empty()
-    n_placeholder = st.empty()
-    button = st.empty()
+
+    n_placeholder=st.empty()
+    standard_placeholder=st.empty()
+    button=st.empty()
 
     if session_state.quiz_data is None:
         board_names = [board["name"] for board in data["boards"]]
@@ -43,24 +47,27 @@ def app():
         subject_list = next((b for b in classe_list["subjects"] if b["name"] == subject), None)
 
         lesson_names = [lesson["name"] for lesson in subject_list["lessons"]]
-        lesson = lesson_placeholder.selectbox("Select Lesson", lesson_names)
-        lesson_list = next((b for b in subject_list["lessons"] if b["name"] == lesson), None)
 
-        topic = topic_placeholder.selectbox("Select topic", lesson_list["topics"])
-
-        n = n_placeholder.number_input("Number of posts", min_value=1, max_value=15, value=1, step=1)
+        lesson = lesson_placeholder.selectbox("Select Lesson",lesson_names)
+        lesson_list= next((b for b in subject_list["lessons"] if b["name"]==lesson) , None)
+        
+        topic = topic_placeholder.selectbox("Select topic",lesson_list["topics"])
+        standard =standard_placeholder.selectbox("select the standard",["Basic","Intermediate","Advanced"])
+        n = n_placeholder.number_input("Number of questions", min_value = 1 ,max_value = 25, value = 1, step = 1)
         if button.button("Generate"):
-            if n and board and classe and subject and lesson and topic:
-                try:
-                    session_state.quiz_data = create_ques_ans(n, board, classe, subject, lesson, topic)
+            try:
+                    session_state.quiz_data = create_ques_ans(n, board ,classe , subject , lesson , topic,standard)
+
                     n_placeholder.empty()
                     board_placeholder.empty()
                     class_placeholder.empty()
                     subject_placeholder.empty()
                     lesson_placeholder.empty()
                     topic_placeholder.empty()
-                except Exception as e:
-                    st.error("Please select valid topic and number")
+
+                    standard_placeholder.empty()
+            except Exception as e :
+                    st.error("Please select valid number")
     if session_state.quiz_data:
         questions = session_state.quiz_data[0]
         options = session_state.quiz_data[1]
@@ -94,6 +101,8 @@ def app():
                     if ans[i] != user_input:
                         question_placeholder.error(f" Wrong! , right answer is {answers[i]}")
                 st.success("Test Score - " + str(session_state.score))
+                
+                st.success(f"{report([questions,ans])}")
         if session_state.quiz_data :
             new_quiz = st.button("new quiz")
             if new_quiz:
