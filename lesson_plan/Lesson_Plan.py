@@ -9,24 +9,41 @@ import Syllabus as S
 from Lesson_Utils import generate_response,template
 from students import student
 import json
-import os
+import prompts
+from langchain.chains import create_extraction_chain
+from langchain import PromptTemplate
+from langchain import LLMChain
+from langchain.chains import ConversationChain
+from langchain.chains.conversation.memory import ConversationBufferWindowMemory
+from langchain.chains.question_answering import load_qa_chain
+import pickle
+from langchain.vectorstores import Chroma
+from langchain.embeddings import SentenceTransformerEmbeddings
+
+
 #setting model and api key:
 os.environ['OPENAI_API_KEY']=my_key
 
-LLM_model=ChatOpenAI(temperature=0.5)
+LLM_model=ChatOpenAI(temperature=0)
 
 openai.api_key =my_key
-
+#llm=gpt3_model = ChatOpenAI(model="gpt-3.5-turbo-0613",temperature=0)
 
 def main():
+    llm=gpt3_model = ChatOpenAI(model="gpt-3.5-turbo-0613",temperature=0)
+
     #Reading json file and storing its data in data variable:
     with open('Syllabus1.json') as f:
         data=json.load(f)
         boards=[] #storing all available boards in json file to list
         for board in data['boards']:
             boards.append(board['name'])
-
-
+    embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    with open('D:\LLM_Intern\Vector_DB\CBSE-9th-Motion.pkl','rb') as f:
+        chunks=pickle.load(f)
+    st.session_state.db = Chroma.from_texts(chunks,embedding=embeddings)
+    st.write("database generated")
+    qa_chain = load_qa_chain(llm, chain_type="stuff",verbose=True)
 
 
     #creating student object
@@ -100,16 +117,96 @@ def main():
     else:
         st.write("Mode: Revision")
 
-    
+
     #button to generate response:
     if st.button("Generate"):
         #spinner will shown while generating response
         with st.spinner(f"Generating Lesson plan for {stud.get_std()} std of {stud.get_board()} student"):
-            response=generate_response(template,LLM_model,mode,stud.get_std(),stud.get_lesson(),stud.get_board(),stud.get_subtopic())
+            template='''1) give engaging introduction to learn the lesson e.g. ask some questions
+                        2) then give the clear learning objectives
+                        3) then give the list of clear concepts
+                        4) then give some real life examples explaing the concepts
+                        5) then give conclusion which gives overview'''
+            #prompt = PromptTemplate.from_template(template)
+           # gpt3_model = ChatOpenAI(model="gpt-3.5-turbo-0613",temperature=0)
+            #chain = LLMChain(prompt = prompt, llm = gpt3_model)
+            #resp=chain.run(mode="Learning",std=stud.get_std(),lesson=stud.get_lesson(),board=stud.get_board(),subtopic=stud.get_subtopic())
+            #using similarity search:
+            matching_docs = st.session_state.db.similarity_search(template)
+            answer =  qa_chain.run(input_documents=matching_docs, question=template)
+            #llm = ChatOpenAI(temperature = 0, model = "gpt-3.5-turbo-0613")
+            schema = {
+            "properties" : {
+                "Motivation" : {"type" : "string"},
+                "clear Learning objectives" : {"type" : "string"},
+                "engaging introduction" : {"type" : "string"},
+                "clear concepts" : {"type" : "string"},
+                "examples" : {"type" : "string"},
+                "conclusion" : {"type" : "string"}
+            },
+            "required" : ["Motivation","clear Learning objectives","engaging introduction","clear concepts","examples","conclusion"]
+            }
+            chain = create_extraction_chain(schema, llm)
+            response = chain.run(answer)
+            st.write("content Generated")
+            if 'content_items' not in st.session_state:
+                st.session_state.content_items=[response[0]['Motivation'],response[0]['clear Learning objectives'],response[0]['clear concepts'],response[0]['examples'],response[0]['conclusion']]
+            #st.write(response)
+# Add a button to navigate to the next item
+    
+    if 'index' not in st.session_state:
+        st.session_state.index = 0
+# Add a button to navigate to the next item
+    if st.button('Next'):
+        if st.session_state.index < len(st.session_state.content_items) - 1:
+            st.session_state.index += 1
+
+    if st.button('Previous'):
+     if st.session_state.index > 0:
+        st.session_state.index -= 1
+    try:
+        for i in range(len(st.session_state.content_items)):
+            if i == st.session_state.index:
+                if i==0:
+                    st.header('Motivation')
+                elif i==1:
+                    st.header('Learning Objective')
+                elif i==2:
+                    st.header('concepts')
+                elif i==3:
+                    st.header('Examples')
+                elif i==4:
+                    st.header('conclusion')
+                st.write(st.session_state.content_items[i])
+            #st.markdown(response)
+    except:
+        st.write("")
+    #Chat interface:
+    user_input=st.chat_input("Ask me")
+    if user_input:
+        with st.chat_message("user"):
+                st.markdown(user_input)
+    if user_input:
+        try:
+            content=st.session_state.content_items[st.session_state.index]
+            input=f"for this \n\n {content} \n\n {user_input}"
+
+            response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content":input}
+                ]
+            )
+
+            # Extract the assistant's reply
+            assistant_reply = response['choices'][0]['message']['content']
+            st.subheader("Bot response:")
             
-       # Displaying the response:
-        st.write(response)
-        
+            with st.chat_message("assistant"):
+                st.markdown(response['choices'][0]['message']['content'])
+        except:
+            st.warning("Please generate lesson plan first")
 
 
 
