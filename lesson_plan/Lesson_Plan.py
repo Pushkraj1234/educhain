@@ -9,7 +9,7 @@ import Syllabus as S
 from Lesson_Utils import generate_response,template
 from students import student
 import json
-
+import os
 #setting model and api key:
 os.environ['OPENAI_API_KEY']=my_key
 
