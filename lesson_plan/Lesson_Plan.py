@@ -5,8 +5,7 @@ from key import my_key
 import os
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
-import Syllabus as S
-from Lesson_Utils import generate_response,template
+from Lesson_Utils import generate_response,template,add_sidebar_image
 from students import student
 import json
 import prompts
@@ -18,7 +17,11 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.chains.question_answering import load_qa_chain
 import pickle
 from langchain.vectorstores import Chroma
-from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain.embeddings import SentenceTransformerEmbeddings,OpenAIEmbeddings
+from streamlit_chat import message
+from langchain.vectorstores import Pinecone
+import pinecone
+from langchain.chains import RetrievalQA
 
 
 #setting model and api key:
@@ -30,6 +33,12 @@ openai.api_key =my_key
 #llm=gpt3_model = ChatOpenAI(model="gpt-3.5-turbo-0613",temperature=0)
 
 def main():
+    # Logo of intellify:
+    path=r"D:\LLM_Intern\Logo\269918774161234554881505252098083552495234n-1599465108984.png"
+    with open(path,'rb') as f:
+        image=f.read()
+    # Call the function to add the image to the sidebar
+    add_sidebar_image(image, width=150)
     llm=gpt3_model = ChatOpenAI(model="gpt-3.5-turbo-0613",temperature=0)
 
     #Reading json file and storing its data in data variable:
@@ -38,17 +47,18 @@ def main():
         boards=[] #storing all available boards in json file to list
         for board in data['boards']:
             boards.append(board['name'])
-    embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-    with open('D:\LLM_Intern\Vector_DB\CBSE-9th-Motion.pkl','rb') as f:
-        chunks=pickle.load(f)
-    st.session_state.db = Chroma.from_texts(chunks,embedding=embeddings)
-    st.write("database generated")
-    qa_chain = load_qa_chain(llm, chain_type="stuff",verbose=True)
-
+    embeddings = OpenAIEmbeddings()
+    pinecone.init(
+    api_key="a25eb86f-4fe3-4f52-9cb3-84a5e129ceec",
+    environment="asia-southeast1-gcp-free"
+)
+    #st.write("database generated")
+    #qa_chain = load_qa_chain(llm, chain_type="stuff",verbose=True)
+    index_name="lesson-plan-vec-store"
 
     #creating student object
     stud=student()
-    st.title("Lesson Plan Generator")
+    st.header("Lesson Plan Generator :book:")
     #getting board as input from student with selectbox and setting attribute value:
     board=st.sidebar.selectbox('Select your board',boards)
     stud.set_board(board)
@@ -122,7 +132,7 @@ def main():
     if st.button("Generate"):
         #spinner will shown while generating response
         with st.spinner(f"Generating Lesson plan for {stud.get_std()} std of {stud.get_board()} student"):
-            template='''1) give engaging introduction to learn the lesson e.g. ask some questions
+            template='''1) give engaging introduction and motivation why to learn the lesson with asking some questions makeing students curious
                         2) then give the clear learning objectives
                         3) then give the list of clear concepts
                         4) then give some real life examples explaing the concepts
@@ -132,51 +142,57 @@ def main():
             #chain = LLMChain(prompt = prompt, llm = gpt3_model)
             #resp=chain.run(mode="Learning",std=stud.get_std(),lesson=stud.get_lesson(),board=stud.get_board(),subtopic=stud.get_subtopic())
             #using similarity search:
-            matching_docs = st.session_state.db.similarity_search(template)
-            answer =  qa_chain.run(input_documents=matching_docs, question=template)
-            #llm = ChatOpenAI(temperature = 0, model = "gpt-3.5-turbo-0613")
+            #matching_docs = st.session_state.db.similarity_search(template)
+            docsearch = Pinecone.from_existing_index(index_name, embeddings)
+            docs = docsearch.similarity_search(template)
+            llm = ChatOpenAI(temperature = 0, model = "gpt-3.5-turbo-0613")
+            qa_chain = RetrievalQA.from_chain_type(llm, retriever=docsearch.as_retriever())
+            result = qa_chain({"query": template})
+            answer=result['result']
             schema = {
             "properties" : {
-                "Motivation" : {"type" : "string"},
-                "clear Learning objectives" : {"type" : "string"},
                 "engaging introduction" : {"type" : "string"},
+                "clear Learning objectives" : {"type" : "string"},
+                #"engaging introduction" : {"type" : "string"},
                 "clear concepts" : {"type" : "string"},
                 "examples" : {"type" : "string"},
                 "conclusion" : {"type" : "string"}
             },
-            "required" : ["Motivation","clear Learning objectives","engaging introduction","clear concepts","examples","conclusion"]
+            "required" : ["Motivation","clear Learning objectives","clear concepts","examples","conclusion"]
             }
             chain = create_extraction_chain(schema, llm)
             response = chain.run(answer)
             st.write("content Generated")
             if 'content_items' not in st.session_state:
-                st.session_state.content_items=[response[0]['Motivation'],response[0]['clear Learning objectives'],response[0]['clear concepts'],response[0]['examples'],response[0]['conclusion']]
+                st.session_state.content_items=[response[0]["engaging introduction"],response[0]['clear Learning objectives'],response[0]['clear concepts'],response[0]['examples'],response[0]['conclusion']]
             #st.write(response)
 # Add a button to navigate to the next item
     
     if 'index' not in st.session_state:
         st.session_state.index = 0
 # Add a button to navigate to the next item
-    if st.button('Next'):
-        if st.session_state.index < len(st.session_state.content_items) - 1:
-            st.session_state.index += 1
-
-    if st.button('Previous'):
-     if st.session_state.index > 0:
-        st.session_state.index -= 1
+    col1,col2=st.columns([1,1])
+    with col2:
+        if st.button('Next :arrow_forward:'):
+            if st.session_state.index < len(st.session_state.content_items) - 1:
+                st.session_state.index += 1
+    with col1:
+        if st.button(':arrow_backward: Previous'):
+            if st.session_state.index > 0:
+                st.session_state.index -= 1
     try:
         for i in range(len(st.session_state.content_items)):
             if i == st.session_state.index:
                 if i==0:
-                    st.header('Motivation')
+                    st.subheader('Motivation :writing_hand:')
                 elif i==1:
-                    st.header('Learning Objective')
+                    st.subheader('Learning Objective :writing_hand:')
                 elif i==2:
-                    st.header('concepts')
+                    st.subheader('concepts :writing_hand:')
                 elif i==3:
-                    st.header('Examples')
+                    st.subheader('Examples :writing_hand:')
                 elif i==4:
-                    st.header('conclusion')
+                    st.subheader('conclusion :writing_hand:')
                 st.write(st.session_state.content_items[i])
             #st.markdown(response)
     except:
@@ -184,29 +200,28 @@ def main():
     #Chat interface:
     user_input=st.chat_input("Ask me")
     if user_input:
-        with st.chat_message("user"):
-                st.markdown(user_input)
-    if user_input:
-        try:
-            content=st.session_state.content_items[st.session_state.index]
-            input=f"for this \n\n {content} \n\n {user_input}"
+        message(user_input,is_user=True,key=str(0)+'_user')
+    with st.spinner("generating response"):
+        if user_input:
+            try:
+                content=st.session_state.content_items[st.session_state.index]
+                input=f"for this \n\n {content} \n\n {user_input}"
 
-            response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content":input}
-                ]
-            )
+                response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                        {"role": "system", "content": "You are a helpful assistant."},
+                        {"role": "user", "content":input}
+                    ]
+                )
 
-            # Extract the assistant's reply
-            assistant_reply = response['choices'][0]['message']['content']
-            st.subheader("Bot response:")
-            
-            with st.chat_message("assistant"):
-                st.markdown(response['choices'][0]['message']['content'])
-        except:
-            st.warning("Please generate lesson plan first")
+                # Extract the assistant's reply
+                assistant_reply = response['choices'][0]['message']['content']
+                #st.subheader("Bot response:")
+                message(assistant_reply,is_user=False)
+                
+            except:
+                st.warning("Please generate lesson plan first")
 
 
 
